@@ -25,6 +25,10 @@
   <property name="windowTitle">
    <string>AbqJobsSubmitter</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="AbqJobsSubmitter.qrc">
+    <normaloff>:/img/Icon.png</normaloff>:/img/Icon.png</iconset>
+  </property>
   <widget class="QLineEdit" name="lineEdit_InputFolder">
    <property name="geometry">
     <rect>
@@ -334,7 +338,9 @@
   <tabstop>checkBox_RES</tabstop>
   <tabstop>checkBox_STT</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="AbqJobsSubmitter.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>lineEdit_InputFolder</sender>
