@@ -7,35 +7,51 @@ Date: 2023.06.16
 """
 
 from PyQt5.QtWidgets import (QWidget, QApplication, QFileDialog, QMessageBox)
+from PyQt5.QtCore import QThread, pyqtSignal
 import sys, subprocess, os
 
 from AbqJobsSubmitter_UI import Ui_AbqJobsSubmitter
 
-
-def run_cmd_Popen_fileno(cmd_string, file_path):
-    return subprocess.Popen(cmd_string, shell=True, cwd=file_path,
+class AbqJobThread(QThread):
+    cur_job_id = pyqtSignal(int)
+    complete = pyqtSignal()
+    
+    def __init__(self, abq_cmd_list:list, abq_wd_str:str):
+        super(AbqJobThread, self).__init__()
+        self.abq_cmd_list = abq_cmd_list
+        self.abq_wd = abq_wd_str
+    
+    def run(self):
+        for idx, cmd in enumerate(self.abq_cmd_list):
+            print(idx, cmd)
+            self.cur_job_id.emit(idx+1)
+            subprocess.Popen(cmd, shell=True, cwd=self.abq_wd,
                             stdout=None, stderr=None).wait()
+        self.complete.emit()
+
 
 class SubmitterWindow(QWidget, Ui_AbqJobsSubmitter):
-
+    
     def __init__(self):
         super(SubmitterWindow, self).__init__()
         
-        self.inps_folder_dir = ''
+        self.cur_dir = ''
         self.last_dir = ''
-        self.inps_list = []
-        self.abaqus_ver_cmd = 'abaqus'
+        self.cmd_str_list = []
+        self.abq_ver = 'abaqus'
         self.cpus_num = 8
         self.isDeleteFiles = True
-        self.del_expect_fileTypeList = set()
+        self.del_expect_fileTypeSet = {'inp', 'odb'}
         
+        self.abq_jobs = None
+
         self.setupUi(self)
         self.lineEdit_InputFolder.setStyleSheet('color: #828282')
         self.lineEdit_AbqVer.setEnabled(False)
 
     def handleEditInpFolder(self):
-        self.inps_folder_dir = self.lineEdit_InputFolder.text()
-        # print(self.inps_folder_dir)
+        self.cur_dir = self.lineEdit_InputFolder.text()
+        # print(self.cur_dir)
         return 
     
     def handleSelectInpFolder(self):
@@ -43,14 +59,14 @@ class SubmitterWindow(QWidget, Ui_AbqJobsSubmitter):
             folder_path = QFileDialog.getExistingDirectory(self, "Select Folder", self.last_dir)
         else:
             folder_path = QFileDialog.getExistingDirectory(self, "Select Folder", "./")
-        self.inps_folder_dir = folder_path
-        if self.inps_folder_dir:
-            self.last_dir = self.inps_folder_dir
-            self.lineEdit_InputFolder.setText(self.inps_folder_dir)
+        self.cur_dir = folder_path
+        if self.cur_dir:
+            self.last_dir = self.cur_dir
+            self.lineEdit_InputFolder.setText(self.cur_dir)
         return 
     
     def handleEditAbqVer(self):
-        self.abaqus_ver_cmd = self.lineEdit_AbqVer.Text()
+        self.abq_ver = self.lineEdit_AbqVer.Text()
         return 
       
     def handleEditCPUnums(self, cpus_num):
@@ -70,53 +86,53 @@ class SubmitterWindow(QWidget, Ui_AbqJobsSubmitter):
     
     def handleToggleFileType_STA(self, isSTAexpect):
         if isSTAexpect:
-            self.del_expect_fileTypeList.add('sta')
+            self.del_expect_fileTypeSet.add('sta')
         else:
-            self.del_expect_fileTypeList.remove('sta')
+            self.del_expect_fileTypeSet.remove('sta')
         return 
     
     def handleToggleFileType_LOG(self, isLOGexpect):
         if isLOGexpect:
-            self.del_expect_fileTypeList.add('log')
+            self.del_expect_fileTypeSet.add('log')
         else:
-            self.del_expect_fileTypeList.remove('log')
+            self.del_expect_fileTypeSet.remove('log')
         return 
     
     def handleToggleFileType_MSG(self, isMSGexpect):
         if isMSGexpect:
-            self.del_expect_fileTypeList.add('msg')
+            self.del_expect_fileTypeSet.add('msg')
         else:
-            self.del_expect_fileTypeList.remove('msg')
+            self.del_expect_fileTypeSet.remove('msg')
         return 
     
     def handleToggleFileType_DAT(self, isDATexpect):
         if isDATexpect:
-            self.del_expect_fileTypeList.add('dat')
+            self.del_expect_fileTypeSet.add('dat')
         else:
-            self.del_expect_fileTypeList.remove('dat')
+            self.del_expect_fileTypeSet.remove('dat')
         return 
     
     def handleToggleFileType_RES(self, isRESexpect):
         if isRESexpect:
-            self.del_expect_fileTypeList.add('res')
+            self.del_expect_fileTypeSet.add('res')
         else:
-            self.del_expect_fileTypeList.remove('res')
+            self.del_expect_fileTypeSet.remove('res')
         return 
     
     def handleToggleFileType_STT(self, isSTTexpect):
         if isSTTexpect:
-            self.del_expect_fileTypeList.add('stt')
+            self.del_expect_fileTypeSet.add('stt')
         else:
-            self.del_expect_fileTypeList.remove('stt')
+            self.del_expect_fileTypeSet.remove('stt')
         return 
     
     def handleSubmit(self):
-        self.inps_list = self.get_inp_list(self.inps_folder_dir)
-        self.submit_inps(self.inps_list, self.abaqus_ver_cmd, self.cpus_num)
-        if self.isDeleteFiles:
-            exclude_ls = {'inp', 'odb'} | self.del_expect_fileTypeList
-            self.deletefiles(self.inps_folder_dir , self.inps_list, exclude_ls)
-        return
+        inps_list = self.get_inp_list(self.cur_dir)
+        for job in inps_list:
+            cmd = "{0} job={1} cpus={2} int ask=off".format(self.abq_ver, job, self.cpus_num)
+            self.cmd_str_list.append(cmd)
+        self.pushButton_Submit.setEnabled(False)
+        self.excute_jobs_thread()
     
     def get_inp_list(self, folder_dir):
         inps_ls = []
@@ -131,14 +147,25 @@ class SubmitterWindow(QWidget, Ui_AbqJobsSubmitter):
                     'The directory is invalid, Please reselect!')
         return inps_ls
     
-    def submit_inps(self, inp_file_list, abqcmd='abaqus', cpu_num=8):
-        total_jobs_num = len(inp_file_list)
-        for idx, job in enumerate(inp_file_list):
-            cmd_string = "{0} job={1} cpus={2} int ask=off".format(abqcmd, job, cpu_num)
-            self.setWindowTitle('AbqJobSubmitter-Current/Total: {0}/{1}'.format(idx+1, total_jobs_num))
-            run_cmd_Popen_fileno(cmd_string, file_path=self.inps_folder_dir)
+    def excute_jobs_thread(self):
+        self.abq_jobs = AbqJobThread(self.cmd_str_list, self.cur_dir)
+        self.abq_jobs.cur_job_id.connect(self.updateState)
+        self.abq_jobs.complete.connect(self.handleComplete)
+        self.abq_jobs.start()
             
-    def deletefiles(self, file_path, inp_file_list, exclude_file_type={'inp', 'odb'}):
+    def updateState(self, current:int):
+        total_jobs_num = len(self.cmd_str_list)
+        self.setWindowTitle('AbqJobSubmitter-Current/Total: {0}/{1}'.format(current, total_jobs_num))
+        
+    def handleComplete(self):
+        self.pushButton_Submit.setEnabled(True)
+        inps_list = self.get_inp_list(self.cur_dir)
+        if self.isDeleteFiles:
+            self.setWindowTitle('AbqJobSubmitter-Deleting')
+            self.deletefiles(self.cur_dir , inps_list, self.del_expect_fileTypeSet)
+        self.setWindowTitle('AbqJobSubmitter-Complete!')
+            
+    def deletefiles(self, file_path, inp_file_list, expect_file_type={'inp', 'odb'}):
         file_ls = os.listdir(file_path)
         for file in file_ls:
             f_path = os.path.join(file_path, file)
@@ -146,7 +173,7 @@ class SubmitterWindow(QWidget, Ui_AbqJobsSubmitter):
                 continue
             elif not file.split(".")[0] in inp_file_list:
                 continue
-            elif file.split(".")[-1] in exclude_file_type:
+            elif file.split(".")[-1] in expect_file_type:
                 continue
             else:
                 os.remove(f_path)

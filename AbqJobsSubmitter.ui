@@ -1,0 +1,562 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AbqJobsSubmitter</class>
+ <widget class="QWidget" name="AbqJobsSubmitter">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>478</width>
+    <height>250</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="font">
+   <font>
+    <family>Microsoft YaHei UI</family>
+    <pointsize>13</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>AbqJobsSubmitter</string>
+  </property>
+  <widget class="QLineEdit" name="lineEdit_InputFolder">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>20</y>
+     <width>310</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::ClickFocus</enum>
+   </property>
+   <property name="placeholderText">
+    <string>Input Folder</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_selectInputFolder">
+   <property name="geometry">
+    <rect>
+     <x>340</x>
+     <y>20</y>
+     <width>120</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Select folder</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkBox_delete">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>115</y>
+     <width>420</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Delete other files after the calculation is completed</string>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="tristate">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_CPUs">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>70</y>
+     <width>60</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+     <pointsize>14</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>CPUs:</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="spinBox_cpusNum">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>70</y>
+     <width>60</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="prefix">
+    <string/>
+   </property>
+   <property name="maximum">
+    <number>64</number>
+   </property>
+   <property name="value">
+    <number>8</number>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_Abq_ver">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>70</y>
+     <width>120</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+     <pointsize>14</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Abq ver:</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_AbqVer">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>70</y>
+     <width>80</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>abaqus</string>
+   </property>
+   <property name="cursorPosition">
+    <number>6</number>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_Expect">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>150</y>
+     <width>60</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Expect:</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>150</y>
+     <width>348</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="HLayout_fileType_checkBoxes">
+    <property name="spacing">
+     <number>10</number>
+    </property>
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>2</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>2</number>
+    </property>
+    <item>
+     <widget class="QCheckBox" name="checkBox_STA">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="text">
+       <string>sta</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QCheckBox" name="checkBox_LOG">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="text">
+       <string>log</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QCheckBox" name="checkBox_MSG">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="text">
+       <string>msg</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QCheckBox" name="checkBox_DAT">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="text">
+       <string>dat</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QCheckBox" name="checkBox_RES">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="text">
+       <string>res</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QCheckBox" name="checkBox_STT">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="text">
+       <string>stt</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QPushButton" name="pushButton_Submit">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>200</y>
+     <width>75</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Submit</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_Close">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>200</y>
+     <width>75</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Close</string>
+   </property>
+  </widget>
+ </widget>
+ <tabstops>
+  <tabstop>lineEdit_InputFolder</tabstop>
+  <tabstop>pushButton_selectInputFolder</tabstop>
+  <tabstop>lineEdit_AbqVer</tabstop>
+  <tabstop>spinBox_cpusNum</tabstop>
+  <tabstop>checkBox_delete</tabstop>
+  <tabstop>checkBox_STA</tabstop>
+  <tabstop>checkBox_LOG</tabstop>
+  <tabstop>checkBox_MSG</tabstop>
+  <tabstop>checkBox_DAT</tabstop>
+  <tabstop>checkBox_RES</tabstop>
+  <tabstop>checkBox_STT</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>lineEdit_InputFolder</sender>
+   <signal>editingFinished()</signal>
+   <receiver>AbqJobsSubmitter</receiver>
+   <slot>handleEditInpFolder()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>174</x>
+     <y>34</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>238</x>
+     <y>97</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_selectInputFolder</sender>
+   <signal>clicked()</signal>
+   <receiver>AbqJobsSubmitter</receiver>
+   <slot>handleSelectInpFolder()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>399</x>
+     <y>34</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>238</x>
+     <y>97</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEdit_AbqVer</sender>
+   <signal>editingFinished()</signal>
+   <receiver>AbqJobsSubmitter</receiver>
+   <slot>handleEditAbqVer()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>139</x>
+     <y>84</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>238</x>
+     <y>97</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBox_cpusNum</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>AbqJobsSubmitter</receiver>
+   <slot>handleEditCPUnums()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>289</x>
+     <y>84</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>238</x>
+     <y>97</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_delete</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>AbqJobsSubmitter</receiver>
+   <slot>handleToggleDeleteFiles()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>229</x>
+     <y>129</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>238</x>
+     <y>97</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_STA</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>AbqJobsSubmitter</receiver>
+   <slot>handleToggleFileType_STA()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>114</x>
+     <y>164</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>238</x>
+     <y>97</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_LOG</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>AbqJobsSubmitter</receiver>
+   <slot>handleToggleFileType_LOG()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>172</x>
+     <y>164</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>238</x>
+     <y>97</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_MSG</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>AbqJobsSubmitter</receiver>
+   <slot>handleToggleFileType_MSG()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>236</x>
+     <y>164</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>238</x>
+     <y>97</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_DAT</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>AbqJobsSubmitter</receiver>
+   <slot>handleToggleFileType_DAT()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>300</x>
+     <y>164</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>238</x>
+     <y>97</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_RES</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>AbqJobsSubmitter</receiver>
+   <slot>handleToggleFileType_RES()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>359</x>
+     <y>164</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>238</x>
+     <y>97</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_STT</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>AbqJobsSubmitter</receiver>
+   <slot>handleToggleFileType_STT()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>414</x>
+     <y>164</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>238</x>
+     <y>97</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_Submit</sender>
+   <signal>clicked()</signal>
+   <receiver>AbqJobsSubmitter</receiver>
+   <slot>handleSubmit()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>167</x>
+     <y>214</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>238</x>
+     <y>124</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_Close</sender>
+   <signal>clicked()</signal>
+   <receiver>AbqJobsSubmitter</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>297</x>
+     <y>214</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>238</x>
+     <y>124</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>handleSelectInpFolder()</slot>
+  <slot>handleEditInpFolder()</slot>
+  <slot>handleEditAbqVer()</slot>
+  <slot>handleEditCPUnums()</slot>
+  <slot>handleToggleDeleteFiles()</slot>
+  <slot>handleToggleFileType_STA()</slot>
+  <slot>handleToggleFileType_LOG()</slot>
+  <slot>handleToggleFileType_MSG()</slot>
+  <slot>handleToggleFileType_DAT()</slot>
+  <slot>handleToggleFileType_RES()</slot>
+  <slot>handleToggleFileType_STT()</slot>
+  <slot>handleSubmit()</slot>
+ </slots>
+</ui>
