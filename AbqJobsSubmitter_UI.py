@@ -14,18 +14,20 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_AbqJobsSubmitter(object):
     def setupUi(self, AbqJobsSubmitter):
         AbqJobsSubmitter.setObjectName("AbqJobsSubmitter")
-        AbqJobsSubmitter.resize(478, 250)
+        AbqJobsSubmitter.resize(480, 250)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(AbqJobsSubmitter.sizePolicy().hasHeightForWidth())
         AbqJobsSubmitter.setSizePolicy(sizePolicy)
+        AbqJobsSubmitter.setMinimumSize(QtCore.QSize(480, 250))
+        AbqJobsSubmitter.setMaximumSize(QtCore.QSize(480, 250))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(13)
         AbqJobsSubmitter.setFont(font)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("Icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(".\\Icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         AbqJobsSubmitter.setWindowIcon(icon)
         self.lineEdit_InputFolder = QtWidgets.QLineEdit(AbqJobsSubmitter)
         self.lineEdit_InputFolder.setGeometry(QtCore.QRect(20, 20, 310, 30))
@@ -93,11 +95,12 @@ class Ui_AbqJobsSubmitter(object):
         self.label_Expect.setFont(font)
         self.label_Expect.setObjectName("label_Expect")
         self.layoutWidget = QtWidgets.QWidget(AbqJobsSubmitter)
-        self.layoutWidget.setGeometry(QtCore.QRect(90, 150, 348, 30))
+        self.layoutWidget.setGeometry(QtCore.QRect(80, 150, 385, 30))
         self.layoutWidget.setObjectName("layoutWidget")
         self.HLayout_fileType_checkBoxes = QtWidgets.QHBoxLayout(self.layoutWidget)
+        self.HLayout_fileType_checkBoxes.setSizeConstraint(QtWidgets.QLayout.SetFixedSize)
         self.HLayout_fileType_checkBoxes.setContentsMargins(0, 2, 0, 2)
-        self.HLayout_fileType_checkBoxes.setSpacing(10)
+        self.HLayout_fileType_checkBoxes.setSpacing(5)
         self.HLayout_fileType_checkBoxes.setObjectName("HLayout_fileType_checkBoxes")
         self.checkBox_STA = QtWidgets.QCheckBox(self.layoutWidget)
         self.checkBox_STA.setEnabled(True)
@@ -119,10 +122,6 @@ class Ui_AbqJobsSubmitter(object):
         self.checkBox_RES.setEnabled(True)
         self.checkBox_RES.setObjectName("checkBox_RES")
         self.HLayout_fileType_checkBoxes.addWidget(self.checkBox_RES)
-        self.checkBox_STT = QtWidgets.QCheckBox(self.layoutWidget)
-        self.checkBox_STT.setEnabled(True)
-        self.checkBox_STT.setObjectName("checkBox_STT")
-        self.HLayout_fileType_checkBoxes.addWidget(self.checkBox_STT)
         self.pushButton_Submit = QtWidgets.QPushButton(AbqJobsSubmitter)
         self.pushButton_Submit.setGeometry(QtCore.QRect(130, 200, 75, 30))
         font = QtGui.QFont()
@@ -149,7 +148,6 @@ class Ui_AbqJobsSubmitter(object):
         self.checkBox_MSG.stateChanged['int'].connect(AbqJobsSubmitter.handleToggleFileType_MSG) # type: ignore
         self.checkBox_DAT.stateChanged['int'].connect(AbqJobsSubmitter.handleToggleFileType_DAT) # type: ignore
         self.checkBox_RES.stateChanged['int'].connect(AbqJobsSubmitter.handleToggleFileType_RES) # type: ignore
-        self.checkBox_STT.stateChanged['int'].connect(AbqJobsSubmitter.handleToggleFileType_STT) # type: ignore
         self.pushButton_Submit.clicked.connect(AbqJobsSubmitter.handleSubmit) # type: ignore
         self.pushButton_Close.clicked.connect(AbqJobsSubmitter.close) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(AbqJobsSubmitter)
@@ -162,7 +160,6 @@ class Ui_AbqJobsSubmitter(object):
         AbqJobsSubmitter.setTabOrder(self.checkBox_LOG, self.checkBox_MSG)
         AbqJobsSubmitter.setTabOrder(self.checkBox_MSG, self.checkBox_DAT)
         AbqJobsSubmitter.setTabOrder(self.checkBox_DAT, self.checkBox_RES)
-        AbqJobsSubmitter.setTabOrder(self.checkBox_RES, self.checkBox_STT)
 
     def retranslateUi(self, AbqJobsSubmitter):
         _translate = QtCore.QCoreApplication.translate
@@ -178,7 +175,6 @@ class Ui_AbqJobsSubmitter(object):
         self.checkBox_LOG.setText(_translate("AbqJobsSubmitter", "log"))
         self.checkBox_MSG.setText(_translate("AbqJobsSubmitter", "msg"))
         self.checkBox_DAT.setText(_translate("AbqJobsSubmitter", "dat"))
-        self.checkBox_RES.setText(_translate("AbqJobsSubmitter", "res"))
-        self.checkBox_STT.setText(_translate("AbqJobsSubmitter", "stt"))
+        self.checkBox_RES.setText(_translate("AbqJobsSubmitter", "files for RESTART"))
         self.pushButton_Submit.setText(_translate("AbqJobsSubmitter", "Submit"))
         self.pushButton_Close.setText(_translate("AbqJobsSubmitter", "Close"))

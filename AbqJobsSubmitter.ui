@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>478</width>
+    <width>480</width>
     <height>250</height>
    </rect>
   </property>
@@ -15,6 +15,18 @@
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>480</width>
+    <height>250</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>480</width>
+    <height>250</height>
+   </size>
   </property>
   <property name="font">
    <font>
@@ -26,8 +38,8 @@
    <string>AbqJobsSubmitter</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="AbqJobsSubmitter.qrc">
-    <normaloff>:/img/Icon.png</normaloff>:/img/Icon.png</iconset>
+   <iconset>
+    <normaloff>Icon.png</normaloff>Icon.png</iconset>
   </property>
   <widget class="QLineEdit" name="lineEdit_InputFolder">
    <property name="geometry">
@@ -202,15 +214,18 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>90</x>
+     <x>80</x>
      <y>150</y>
-     <width>348</width>
+     <width>385</width>
      <height>30</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="HLayout_fileType_checkBoxes">
     <property name="spacing">
-     <number>10</number>
+     <number>5</number>
+    </property>
+    <property name="sizeConstraint">
+     <enum>QLayout::SetFixedSize</enum>
     </property>
     <property name="leftMargin">
      <number>0</number>
@@ -270,17 +285,7 @@
        <bool>true</bool>
       </property>
       <property name="text">
-       <string>res</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QCheckBox" name="checkBox_STT">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="text">
-       <string>stt</string>
+       <string>files for RESTART</string>
       </property>
      </widget>
     </item>
@@ -336,11 +341,8 @@
   <tabstop>checkBox_MSG</tabstop>
   <tabstop>checkBox_DAT</tabstop>
   <tabstop>checkBox_RES</tabstop>
-  <tabstop>checkBox_STT</tabstop>
  </tabstops>
- <resources>
-  <include location="AbqJobsSubmitter.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>lineEdit_InputFolder</sender>
@@ -494,22 +496,6 @@
    <hints>
     <hint type="sourcelabel">
      <x>359</x>
-     <y>164</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>238</x>
-     <y>97</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBox_STT</sender>
-   <signal>stateChanged(int)</signal>
-   <receiver>AbqJobsSubmitter</receiver>
-   <slot>handleToggleFileType_STT()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>414</x>
      <y>164</y>
     </hint>
     <hint type="destinationlabel">

@@ -113,17 +113,13 @@ class SubmitterWindow(QWidget, Ui_AbqJobsSubmitter):
         return 
     
     def handleToggleFileType_RES(self, isRESexpect):
+        restart_file = ["res", "stt", "pac", "prt", "abq", "mdl", "sel"]
         if isRESexpect:
-            self.del_expect_fileTypeSet.add('res')
+            for file_type in restart_file:
+                self.del_expect_fileTypeSet.add(file_type)
         else:
-            self.del_expect_fileTypeSet.remove('res')
-        return 
-    
-    def handleToggleFileType_STT(self, isSTTexpect):
-        if isSTTexpect:
-            self.del_expect_fileTypeSet.add('stt')
-        else:
-            self.del_expect_fileTypeSet.remove('stt')
+            for file_type in restart_file:
+                self.del_expect_fileTypeSet.remove(file_type)
         return 
     
     def handleSubmit(self):

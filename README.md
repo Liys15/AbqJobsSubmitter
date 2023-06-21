@@ -1,7 +1,6 @@
 
 
-# ProjectName
-AbqJobSubmitter
+# AbqJobSubmitter
 
 <br />
 
