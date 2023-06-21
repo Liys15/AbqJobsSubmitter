@@ -169,11 +169,12 @@ class SubmitterWindow(QWidget, Ui_AbqJobsSubmitter):
         file_ls = os.listdir(file_path)
         for file in file_ls:
             f_path = os.path.join(file_path, file)
+            (filename, suffix) = os.path.splitext(file)
             if os.path.isdir(f_path):
                 continue
-            elif not file.split(".")[0] in inp_file_list:
+            elif not filename in inp_file_list:
                 continue
-            elif file.split(".")[-1] in expect_file_type:
+            elif suffix.split(".")[-1] in expect_file_type:
                 continue
             else:
                 os.remove(f_path)
